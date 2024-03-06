@@ -43,6 +43,8 @@ Route::middleware(['splade'])->group(function () {
     ])->group(function () {
         Route::view('/dashboard', 'dashboard')->name('dashboard');
         Route::resource('client', \App\Http\Controllers\ClientController::class);
+        Route::resource('executer', \App\Http\Controllers\ExecuterController::class);
+        Route::resource('status', \App\Http\Controllers\StatusController::class);
 
     });
 });
