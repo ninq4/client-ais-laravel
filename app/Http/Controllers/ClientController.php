@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ClientRequest;
 use App\Models\Client;
 use Illuminate\Http\Request;
+use ProtoneMedia\Splade\Facades\Toast;
 use ProtoneMedia\Splade\SpladeTable;
 
 class ClientController extends Controller
@@ -35,40 +37,52 @@ class ClientController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ClientRequest $request)
     {
-        //
+        $client = new Client();
+
+        $client -> name = $request -> input('name');
+
+        $client -> save();
+        Toast::title('Клиент добавлен');
+
+        return redirect()->route('client.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
-
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Client $client)
     {
-        //
+        return view ('services.client.edit', compact('client'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ClientRequest $request, Client $client)
     {
-        //
+        $client -> name = $request -> input('name');
+
+        $client -> save();
+
+        Toast::title('Клиент обновлен');
+
+        return redirect() -> route('client.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Client $client)
     {
-        //
+        $client -> delete();
+
+        Toast::title('Клиент удален');
+
+        return redirect() -> route('client.index');
     }
 }
