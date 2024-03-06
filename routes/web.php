@@ -42,5 +42,7 @@ Route::middleware(['splade'])->group(function () {
         'verified',
     ])->group(function () {
         Route::view('/dashboard', 'dashboard')->name('dashboard');
+        Route::resource('client', \App\Http\Controllers\ClientController::class);
+
     });
 });

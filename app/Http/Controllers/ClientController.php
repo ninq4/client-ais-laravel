@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use Illuminate\Http\Request;
+use ProtoneMedia\Splade\SpladeTable;
 
 class ClientController extends Controller
 {
@@ -11,7 +13,15 @@ class ClientController extends Controller
      */
     public function index()
     {
-        //
+        return view ('services.client.index', [
+            'clients' => SpladeTable::for(Client::class)
+                ->withGlobalSearch(columns:['name'])
+                ->column('name', label: "Имя клиента", sortable: true)
+//            ->column('image',  label: 'Фото')
+                ->column('action', label: "Действие", canBeHidden: false)
+                ->paginate(10)
+
+        ]);
     }
 
     /**
@@ -19,7 +29,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        //
+        return view('services.client.create');
     }
 
     /**
