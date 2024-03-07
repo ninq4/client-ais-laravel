@@ -44,8 +44,14 @@ Route::middleware(['splade'])->group(function () {
         Route::view('/dashboard', 'dashboard')->name('dashboard');
         Route::get('request', [\App\Http\Controllers\RequestController::class, 'index'])->name('request.index');
         Route::get('request/create/{client_id}', [\App\Http\Controllers\RequestController::class, 'create'])->name('request.create');
+        Route::get('request/edit/{client_id}', [\App\Http\Controllers\RequestController::class, 'edit'])->name('request.edit');
+//
+        Route::put('request/update/{id}', [\App\Http\Controllers\RequestController::class, 'update'])->name('request.update');
 
         Route::post('request/store/{client_id}', [\App\Http\Controllers\RequestController::class, 'store'])->name('request.store');
+
+        Route::delete('request/delete/{request}', [\App\Http\Controllers\RequestController::class, 'destroy'])->name('request.delete');
+
         Route::resource('client', \App\Http\Controllers\ClientController::class);
         Route::resource('executer', \App\Http\Controllers\ExecuterController::class);
 

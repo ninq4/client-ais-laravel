@@ -6,6 +6,8 @@ use App\Http\Requests\RequestsRequest;
 use App\Models\Client;
 use App\Models\Executer;
 use Illuminate\Http\Request;
+use ProtoneMedia\Splade\Facades\Toast;
+use ProtoneMedia\Splade\SpladeTable;
 
 class RequestController extends Controller
 {
@@ -14,7 +16,19 @@ class RequestController extends Controller
      */
     public function index()
     {
-        //
+
+        return view ('services.request.index', [
+            'requests' => SpladeTable::for(\App\Models\Request::class)
+                ->withGlobalSearch(columns:['title', 'description', 'name'])
+                ->column('title', label: "Заголовок", sortable: true)
+                ->column('description', label: "Описание", sortable: true)
+                ->column('client_id', label: "Имя клиента", sortable: true)
+                ->column('executer_id', label: "Имя исполнителя", sortable: true)
+//            ->column('image',  label: 'Фото')
+                ->column('action', label: "Действие", canBeHidden: false)
+                ->paginate(10)
+
+        ]);
     }
 
     /**
@@ -42,6 +56,7 @@ class RequestController extends Controller
         $Request->executer_id = $executer->id;
 
         $Request -> save();
+        Toast::title('Обращение добавленно добавлен');
 
         return redirect() -> route('request.index');
 
@@ -58,24 +73,27 @@ class RequestController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(\App\Models\Request $request )
     {
-        //
+        return view('services.request.edit', compact( 'request'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(RequestsRequest $request, Request $Request,)
     {
-        //
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(\App\Models\Request $request)
     {
-        //
+        $request->delete();
+        Toast::title('Обращение удалено');
+        return redirect()->route('request.index');
+
     }
 }

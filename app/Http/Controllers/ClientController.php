@@ -20,7 +20,7 @@ class ClientController extends Controller
                 ->withGlobalSearch(columns:['name'])
                 ->column('name', label: "Имя клиента", sortable: true)
 //            ->column('image',  label: 'Фото')
-                ->column('action', label: "Действие", canBeHidden: false)
+//                ->column('action', label: "Действие", canBeHidden: false)
                 ->paginate(10)
 
         ]);
@@ -42,10 +42,10 @@ class ClientController extends Controller
         $client = new Client();
 
         $client -> name = $request -> input('name');
-
         $client -> save();
-        Toast::title('Клиент добавлен');
         $client_id = $client -> id;
+
+        Toast::title('Клиент добавлен');
 
         return redirect()->route('request.create', compact('client_id'));
     }
@@ -66,13 +66,14 @@ class ClientController extends Controller
      */
     public function update(ClientRequest $request, Client $client)
     {
-        $client -> name = $request -> input('name');
 
-        $client -> save();
+        $client -> name = $request -> input('name');
+        $client -> update();
+
 
         Toast::title('Клиент обновлен');
 
-        return redirect() -> route('client.index');
+        return redirect()->route('request.index');
     }
 
     /**
