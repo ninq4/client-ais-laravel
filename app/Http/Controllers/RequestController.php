@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RequestsRequest;
+use App\Http\Requests\StatusRequest;
 use App\Models\Client;
 use App\Models\Executer;
 use Illuminate\Http\Request;
@@ -24,6 +25,7 @@ class RequestController extends Controller
                 ->column('description', label: "Описание", sortable: true)
                 ->column('client_id', label: "Имя клиента", sortable: true)
                 ->column('executer_id', label: "Имя исполнителя", sortable: true)
+                ->column('status', 'Cтатус', sortable: true)
 //            ->column('image',  label: 'Фото')
                 ->column('action', label: "Действие", canBeHidden: false)
                 ->paginate(10)
@@ -62,13 +64,6 @@ class RequestController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -81,9 +76,21 @@ class RequestController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(RequestsRequest $request, Request $Request,)
+    public function update(Request $request, \App\Models\Request  $Request)
     {
+        $Request -> title = $request -> input('title');
+        $Request -> description = $request -> input('description');
+        $Request -> status = $request -> input('status');
 
+        $Request -> client_id = $request -> input('client_id');
+        $Request -> executer_id = $request -> input('executer_id');
+
+        $Request -> update();
+
+
+        Toast::title('Обращение обновлено');
+
+        return redirect()->route('request.index');
     }
 
     /**

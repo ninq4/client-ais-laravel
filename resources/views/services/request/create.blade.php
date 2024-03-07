@@ -1,4 +1,4 @@
-@seoTitle(__('Новые клиенты'))
+@seoTitle(__('Новое обращение'))
 
 <x-app-layout>
     <x-slot:header>

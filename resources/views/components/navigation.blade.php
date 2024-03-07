@@ -8,7 +8,7 @@
                 <div class="flex">
                     <!-- Logo -->
                     <div class="shrink-0 flex items-center">
-                        <Link href="{{ route('dashboard') }}">
+                        <Link href="{{ route('request.index') }}">
                             <x-application-mark class="block h-9 w-auto" />
                         </Link>
                     </div>
@@ -19,6 +19,12 @@
                             {{ __('Обращения') }}
                         </x-nav-link>
                     </div>
+
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+                    </div>
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link :href="route('client.index')" :active="request()->routeIs('client.index')">
                             {{ __('Клиенты') }}
@@ -27,11 +33,6 @@
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link :href="route('executer.index')" :active="request()->routeIs('executer.index')">
                             {{ __('Исполнители') }}
-                        </x-nav-link>
-                    </div>
-                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                            {{ __('Dashboard') }}
                         </x-nav-link>
                     </div>
                 </div>

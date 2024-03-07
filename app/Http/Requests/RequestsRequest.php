@@ -24,6 +24,7 @@ class RequestsRequest extends FormRequest
         return [
             'title' => 'required|max:255',
             'description' =>'required|max:255',
+            'status' => 'required'
         ];
     }
 }
