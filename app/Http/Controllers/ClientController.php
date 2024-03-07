@@ -45,8 +45,9 @@ class ClientController extends Controller
 
         $client -> save();
         Toast::title('Клиент добавлен');
+        $client_id = $client -> id;
 
-        return redirect()->route('client.index');
+        return redirect()->route('request.create', compact('client_id'));
     }
 
     /**

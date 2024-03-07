@@ -42,9 +42,12 @@ Route::middleware(['splade'])->group(function () {
         'verified',
     ])->group(function () {
         Route::view('/dashboard', 'dashboard')->name('dashboard');
+        Route::get('request', [\App\Http\Controllers\RequestController::class, 'index'])->name('request.index');
+        Route::get('request/create/{client_id}', [\App\Http\Controllers\RequestController::class, 'create'])->name('request.create');
+
+        Route::post('request/store/{client_id}', [\App\Http\Controllers\RequestController::class, 'store'])->name('request.store');
         Route::resource('client', \App\Http\Controllers\ClientController::class);
         Route::resource('executer', \App\Http\Controllers\ExecuterController::class);
-        Route::resource('status', \App\Http\Controllers\StatusController::class);
 
     });
 });
