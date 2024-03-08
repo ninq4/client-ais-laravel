@@ -60,5 +60,7 @@ Route::middleware(['splade'])->group(function () {
         Route::resource('client', \App\Http\Controllers\ClientController::class);
         Route::resource('executer', \App\Http\Controllers\ExecuterController::class);
 
+        Route::resource('information', \App\Http\Controllers\InformationController::class);
+        Route::resource('question', \App\Http\Controllers\QuestionController::class);
     });
 });
