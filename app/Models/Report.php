@@ -20,7 +20,7 @@ class Report extends Model
 
     public function client()
     {
-        $this->belongsTo(Client::class, 'client_id', 'id');
+        return $this->belongsTo(Client::class, 'client_id', 'id');
     }
 
 }

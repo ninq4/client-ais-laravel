@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ReportRequest;
 use App\Http\Requests\RequestsRequest;
 use App\Http\Requests\StatusRequest;
 use App\Models\Client;
 use App\Models\Executer;
+use App\Models\Report;
 use Illuminate\Http\Request;
 use ProtoneMedia\Splade\Facades\Toast;
 use ProtoneMedia\Splade\SpladeTable;
@@ -44,23 +46,23 @@ class RequestController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(RequestsRequest $request, $client_id)
+    public function store(ReportRequest $request, $client_id)
     {
-        $Request = new \App\Models\Request();
+        $report = new Report();
 
 
-        $Request -> title = $request -> input('title');
-        $Request -> description = $request -> input('description');
-        $Request->client_id = $client_id;
+        $report -> title = $request -> input('title');
+        $report -> description = $request -> input('description');
+        $report->client_id = $client_id;
 
-        $executer = Executer::inRandomOrder()->first();
+//        $executer = Executer::inRandomOrder()->first();
 
-        $Request->executer_id = $executer->id;
+//        $report->executer_id = $executer->id;
 
-        $Request -> save();
+        $report -> save();
         Toast::title('Обращение добавленно добавлен');
 
-        return redirect() -> route('request.index');
+        return redirect() -> route('report.index');
 
     }
 
