@@ -11,6 +11,7 @@
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
+        "maatwebsite/excel": "^3.1",
         "protonemedia/laravel-dusk-fakes": "^1.5",
         "protonemedia/laravel-splade-jetstream": "^1.1"
     },

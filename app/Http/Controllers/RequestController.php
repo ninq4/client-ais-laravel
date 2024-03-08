@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ReportRequest;
+
 use App\Http\Requests\RequestsRequest;
-use App\Http\Requests\StatusRequest;
-use App\Models\Client;
 use App\Models\Executer;
-use App\Models\Report;
-use Illuminate\Http\Request;
+use App\Models\request;
+use App\Tables\Requests;
 use ProtoneMedia\Splade\Facades\Toast;
-use ProtoneMedia\Splade\SpladeTable;
 
 class RequestController extends Controller
 {
@@ -20,19 +17,24 @@ class RequestController extends Controller
     public function index()
     {
 
-        return view ('services.request.index', [
-            'requests' => SpladeTable::for(\App\Models\Request::class)
-                ->withGlobalSearch(columns:['title', 'description', 'name'])
-                ->column('title', label: "Заголовок", sortable: true)
-                ->column('description', label: "Описание", sortable: true)
-                ->column('client_id', label: "Имя клиента", sortable: true)
-                ->column('executer_id', label: "Имя исполнителя", sortable: true)
-                ->column('status', 'Cтатус', sortable: true)
-//            ->column('image',  label: 'Фото')
-                ->column('action', label: "Действие", canBeHidden: false)
-                ->paginate(10)
+        return view ('services.request.index',
+            [
 
-        ]);
+//            'requests' => SpladeTable::for(\App\Models\Request::class)
+//                ->withGlobalSearch(columns:['title', 'description', 'name'])
+//                ->column('title', label: "Заголовок", sortable: true)
+//                ->column('description', label: "Описание", sortable: true)
+//                ->column('client_id', label: "Имя клиента", sortable: true)
+//                ->column('executer_id', label: "Имя исполнителя", sortable: true)
+//                ->column('status', 'Cтатус', sortable: true)
+//                ->column('action', label: "Действие", canBeHidden: false)
+//                ->paginate(10)
+
+                'requests' => Requests::class
+
+
+        ]
+        );
     }
 
     /**
@@ -46,23 +48,23 @@ class RequestController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ReportRequest $request, $client_id)
+    public function store(RequestsRequest $request, $client_id)
     {
-        $report = new Report();
+        $Request = new \App\Models\Request();
 
 
-        $report -> title = $request -> input('title');
-        $report -> description = $request -> input('description');
-        $report->client_id = $client_id;
+        $Request -> title = $request -> input('title');
+        $Request -> description = $request -> input('description');
+        $Request->client_id = $client_id;
 
-//        $executer = Executer::inRandomOrder()->first();
+        $executer = Executer::inRandomOrder()->first();
 
-//        $report->executer_id = $executer->id;
+        $Request->executer_id = $executer->id;
 
-        $report -> save();
+        $Request -> save();
         Toast::title('Обращение добавленно добавлен');
 
-        return redirect() -> route('report.index');
+        return redirect() -> route('request.index');
 
     }
 

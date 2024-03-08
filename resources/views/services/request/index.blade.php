@@ -11,7 +11,7 @@
         </x-slot>
         <div class="my-4 p-4 bg-white max-w-4xl mx-auto rounded-md">
             <x-splade-table :for="$requests" >
-                @cell('client_id', $requests)
+                @cell('name', $requests)
                     <p>{{$requests->client->name}}</p>
                 @endcell
                 @cell('executer_id', $requests)

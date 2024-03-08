@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ClientRequest;
 use App\Http\Requests\ReportRequest;
 use App\Models\Report;
+use App\Tables\Reports;
 use Illuminate\Http\Request;
 use ProtoneMedia\Splade\Facades\Toast;
 use ProtoneMedia\Splade\SpladeTable;
@@ -18,15 +19,17 @@ class ReportController extends Controller
     {
 
         return view ('services.report.index', [
-            'reports' => SpladeTable::for(Report::class)
-                ->withGlobalSearch(columns:['title', 'description', 'name'])
-                ->column('title', label: "Заголовок", sortable: true)
-                ->column('description', label: "Описание", sortable: true)
-                ->column('client_id', label: "Имя клиента", sortable: true)
-                ->column('status', 'Cтатус', sortable: true)
-                ->column('action', label: "Действие", canBeHidden: false)
-                ->export()
-                ->paginate(10)
+//            'reports' => SpladeTable::for(Report::class)
+//                ->withGlobalSearch(columns:['title', 'description', 'name'])
+//                ->column('title', label: "Заголовок", sortable: true)
+//                ->column('description', label: "Описание", sortable: true)
+//                ->column('client_id', label: "Имя клиента", sortable: true)
+//                ->column('status', 'Cтатус', sortable: true)
+//                ->column('action', label: "Действие", canBeHidden: false)
+////                ->export()
+//                ->paginate(10)
+
+        'reports' => Reports::class
 
         ]);
     }
@@ -36,7 +39,7 @@ class ReportController extends Controller
      */
     public function create($client_id)
     {
-        return view('services.request.create', compact('client_id'));
+        return view('services.report.create', compact('client_id'));
     }
 
     public function createClient()
@@ -63,7 +66,7 @@ class ReportController extends Controller
      */
     public function store(ReportRequest $request, $client_id)
     {
-        $Request = new \App\Models\Request();
+        $Request = new Report();
 
 
         $Request -> title = $request -> input('title');
@@ -74,7 +77,7 @@ class ReportController extends Controller
         $Request -> save();
         Toast::title('Репорт добавленно добавлено');
 
-        return redirect() -> route('request.index');
+        return redirect() -> route('report.index');
 
     }
 
@@ -113,7 +116,7 @@ class ReportController extends Controller
     {
         $report->delete();
         Toast::title('Заявка удалено');
-        return redirect()->route('request.index');
+        return redirect()->route('report.index');
 
     }
 }
