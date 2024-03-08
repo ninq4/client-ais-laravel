@@ -1,4 +1,4 @@
-@seoTitle(__('Новые информация'))
+@seoTitle(__('Новая информация'))
 
 <x-app-layout>
     <x-slot:header>
@@ -11,8 +11,8 @@
         </x-slot>
         <div class="my-4 p-4 bg-white max-w-xl mx-auto">
             <x-splade-form action="{{ route('information.store') }}">
-                <x-splade-input class="mb-4" name="title" label="Имя title"/>
-                <x-splade-input class="mb-4" name="description" label="Имя description"/>
+                <x-splade-input class="mb-4" name="title" label="Заголовок"/>
+                <x-splade-input class="mb-4" name="description" label="Описание"/>
                 <x-splade-submit label="{{__('Сохранить')}}"/>
             </x-splade-form>
         </div>

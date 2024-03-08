@@ -19,8 +19,7 @@ class InformationController extends Controller
                 ->withGlobalSearch(columns:['title','description'])
                 ->column('title', label: "зоголовок", sortable: true)
                 ->column('description', label: "текст", sortable: true)
-//              ->column('image',  label: 'Фото')
-//              ->column('action', label: "Действие", canBeHidden: false)
+              ->column('action', label: "Действие", canBeHidden: false)
                 ->paginate(10)
 
         ]);
@@ -45,9 +44,9 @@ class InformationController extends Controller
         $information -> description = $request -> input('description');
         $information -> save();
 
-        Toast::title('information добавлен');
+        Toast::title('Информация добавлена');
 
-        return redirect()->route('information.create');
+        return redirect()->route('information.index');
     }
 
     /**
@@ -61,24 +60,35 @@ class InformationController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Information $information)
     {
-        //
+        return view('services.informations.edit', compact('information'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Information $information)
     {
-        //
+
+        $information -> title = $request -> input('title');
+        $information -> description = $request -> input('description');
+        $information -> update();
+
+        Toast::title('Информация обновлена');
+
+        return redirect()->route('information.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Information $information)
     {
-        //
+        $information->delete();
+
+        Toast::title('Информация удалена');
+        return redirect()->route('information.index');
+
     }
 }

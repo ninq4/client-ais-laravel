@@ -25,6 +25,7 @@ class ReportController extends Controller
                 ->column('client_id', label: "Имя клиента", sortable: true)
                 ->column('status', 'Cтатус', sortable: true)
                 ->column('action', label: "Действие", canBeHidden: false)
+                ->export()
                 ->paginate(10)
 
         ]);

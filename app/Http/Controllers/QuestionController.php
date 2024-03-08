@@ -2,25 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Information;
+use App\Models\Question;
 use Illuminate\Http\Request;
 use ProtoneMedia\Splade\Facades\Toast;
 use ProtoneMedia\Splade\SpladeTable;
 
-class InformationController extends Controller
+class QuestionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view ('services.informations.index', [
-            'informations' => SpladeTable::for(Information::class)
+        return view ('services.questions.index', [
+            'questions' => SpladeTable::for(Question::class)
                 ->withGlobalSearch(columns:['title','description'])
                 ->column('title', label: "зоголовок", sortable: true)
                 ->column('description', label: "текст", sortable: true)
-//              ->column('image',  label: 'Фото')
-//              ->column('action', label: "Действие", canBeHidden: false)
+              ->column('action', label: "Действие", canBeHidden: false)
                 ->paginate(10)
 
         ]);
@@ -31,7 +30,7 @@ class InformationController extends Controller
      */
     public function create()
     {
-        return view('services.informations.create');
+        return view('services.questions.create');
     }
 
     /**
@@ -39,15 +38,15 @@ class InformationController extends Controller
      */
     public function store(Request $request)
     {
-        $information = new information();
+        $question = new question();
 
-        $information -> title = $request -> input('title');
-        $information -> description = $request -> input('description');
-        $information -> save();
+        $question -> title = $request -> input('title');
+        $question -> description = $request -> input('description');
+        $question -> save();
 
-        Toast::title('information добавлен');
+        Toast::title('Вопрос добавлен');
 
-        return redirect()->route('information.create');
+        return redirect()->route('question.index');
     }
 
     /**
@@ -61,24 +60,35 @@ class InformationController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(question $question)
     {
-        //
+        return view('services.questions.edit', compact('question'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Question $question)
     {
-        //
+
+        $question -> title = $request -> input('title');
+        $question -> description = $request -> input('description');
+        $question -> update();
+
+        Toast::title('Информация обновлена');
+
+        return redirect()->route('question.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Question $question)
     {
-        //
+        $question->delete();
+
+        Toast::title('Информация удалена');
+        return redirect()->route('question.index');
+
     }
 }
